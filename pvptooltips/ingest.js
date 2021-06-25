@@ -1,11 +1,11 @@
 var fs = require('fs');
-
 const spellObjects = {};
-
-// const data = fs.readFileSync('C:\\Users\\banth\\Documents\\Github\\simc\\SpellDataDump\\demonhunter.txt', 'utf8');
-const data = fs.readFileSync('C:\\Users\\banth\\Documents\\Github\\simc\\SpellDataDump\\allspells.txt', 'utf8');
+const FILEPATH = '..\\..\\simc\\SpellDataDump\\allspells_ptr.txt';
+const data = fs.readFileSync(FILEPATH, 'utf8');
 const commonPvpSpellsFileData = fs.readFileSync('pvpCommonSpells.json', 'utf8');
 const commonPvpSpells = JSON.parse(commonPvpSpellsFileData);
+
+console.log('Loaded', FILEPATH);
 
 const lines = data.split('\n');
 
@@ -110,6 +110,9 @@ Object.values(spellObjects).forEach(o => {
     if (o.triggerSpellIds.length > 0) {
         o.remap = o.triggerSpellIds.map(tId => spellObjects[tId].inheritedPvpNerfs);
         o.triggerSpellIds.forEach(tId => {
+            if (o.worstPvPCoefficient) {
+                spellObjects[tId].inheritedPvpNerfs = spellObjects[tId].inheritedPvpNerfs.concat([[o.info.spellId, o.worstPvPCoefficient]]);
+            }
             spellObjects[tId].inheritedPvpNerfs = spellObjects[tId].inheritedPvpNerfs.concat(o.inheritedPvpNerfs);
         })
     }
@@ -117,6 +120,7 @@ Object.values(spellObjects).forEach(o => {
 
 // Dump our data
 fs.writeFileSync('spells.json', JSON.stringify(spellObjects, null, ' '));
+console.log("spells.json written");
 
 // Write the tooltip data file
 function nerfCoeffToString(n) {
@@ -140,10 +144,11 @@ commonSpellObjects.forEach(o => {
         nerfStrings = `A ${makeRed(nerfCoeffToString(o.worstPvPCoefficient[0]))} nerf to ${o.worstPvPCoefficient[1]} effect\n` + nerfStrings;
     }
     if (nerfStrings) {
-        console.log(nerfStrings);
+        // console.log(nerfStrings);
         lualines = lualines + `[${o.info.spellId}] = {["edits"] = {}, ["text"] = "${nerfStrings.replace(/\n/g,'\\n')}"},\n`;
     }
 });
 
 fs.writeFileSync('luaChanges.lua', lualines);
+console.log("luaChanges.lua written");
 //     [2060] = {["edits"] = {{8,20.0}}, ["text"] = "An efficient spell that heals an ally for |cFFFFFF00(+20.0%)|r"},  
