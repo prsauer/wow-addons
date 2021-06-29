@@ -1,8 +1,15 @@
 # PvP Tooltips
 
-Use
+## Generated Files
+- spells.json
+- luaChanges.lua
 
-`node ingest.js`
+
+## Use
+
+`./build.sh`
+This command will build the new addon in the /build folder
+
 
 Requires the simc repo to be in a folder adjacent to this repo!
 

@@ -1,6 +1,6 @@
 var fs = require('fs');
 const spellObjects = {};
-const FILEPATH = '..\\..\\simc\\SpellDataDump\\allspells_ptr.txt';
+const FILEPATH = '../../simc/SpellDataDump/allspells_ptr.txt';
 const data = fs.readFileSync(FILEPATH, 'utf8');
 const commonPvpSpellsFileData = fs.readFileSync('pvpCommonSpells.json', 'utf8');
 const commonPvpSpells = JSON.parse(commonPvpSpellsFileData);
@@ -10,7 +10,7 @@ console.log('Loaded', FILEPATH);
 const lines = data.split('\n');
 
 function parseNameLine(line) {
-    const findName = new RegExp(/^Name\s*: (?<spellName>[\[\]\.&><_a-zA-Z-+,%/:0-9!" ']*( \(Test\))?( \(unused\))?( \(DNT\))?( \(Visual\))?( \(Enveloping Mist\))?( \(Vivify\))?( \(CSA\))?( \(Fel-Touched\))?( \(Traveler's\))?( \(Bulging\))?( \(Holy\))?( \(Guaranteed Loot\))?( \(HARDCODED\))?( \(2H PVP Weapon Budget\))?( \(5\))?( \(Player\))?( \(Purple\))?( \(DND\))?( \(Lunar\))?( \(Solar\))?( \(Passive\))?) (\(desc=(?<desc>[a-zA-Z 0-9,]*)\) )?(\(id=(?<spellId>[0-9]*)\))? (?<tags>\[.*\])?/);
+    const findName = new RegExp(/^Name\s*: (?<spellName>[\[\]\.&><_a-zA-Z-+,%/:0-9!" ']*( \(Test\))?( \(Self\) \(Aura Applied\/Removed\))?( \(unused\))?( \(DNT\))?( \(Visual\))?( \(Enveloping Mist\))?( \(Vivify\))?( \(CSA\))?( \(Fel-Touched\))?( \(Traveler's\))?( \(Bulging\))?( \(Holy\))?( \(Guaranteed Loot\))?( \(HARDCODED\))?( \(2H PVP Weapon Budget\))?( \(5\))?( \(Player\))?( \(Purple\))?( \(DND\))?( \(Lunar\))?( \(Solar\))?( \(Passive\))?) (\(desc=(?<desc>[a-zA-Z 0-9,]*)\) )?(\(id=(?<spellId>[0-9]*)\))? (?<tags>\[.*\])?/);
     const res = findName.exec(line);
     const spellInfo = res?.groups;
 
