@@ -10,6 +10,9 @@ console.log('Loaded', FILEPATH);
 const lines = data.split('\n');
 
 function parseNameLine(line) {
+    /*
+    This regex filters out all the noise in ability names in the simc data
+    */
     const findName = new RegExp(/^Name\s*: (?<spellName>[\[\]\.&><_a-zA-Z-+,%/:0-9!" ']*( \(Test\))?( \(Self\) \(Aura Applied\/Removed\))?( \(unused\))?( \(DNT\))?( \(Visual\))?( \(Enveloping Mist\))?( \(Vivify\))?( \(CSA\))?( \(Fel-Touched\))?( \(Traveler's\))?( \(Bulging\))?( \(Holy\))?( \(Guaranteed Loot\))?( \(HARDCODED\))?( \(2H PVP Weapon Budget\))?( \(5\))?( \(Player\))?( \(Purple\))?( \(DND\))?( \(Lunar\))?( \(Solar\))?( \(Passive\))?) (\(desc=(?<desc>[a-zA-Z 0-9,]*)\) )?(\(id=(?<spellId>[0-9]*)\))? (?<tags>\[.*\])?/);
     const res = findName.exec(line);
     const spellInfo = res?.groups;
@@ -144,11 +147,9 @@ commonSpellObjects.forEach(o => {
         nerfStrings = `A ${makeRed(nerfCoeffToString(o.worstPvPCoefficient[0]))} nerf to ${o.worstPvPCoefficient[1]} effect\n` + nerfStrings;
     }
     if (nerfStrings) {
-        // console.log(nerfStrings);
         lualines = lualines + `[${o.info.spellId}] = {["edits"] = {}, ["text"] = "${nerfStrings.replace(/\n/g,'\\n')}"},\n`;
     }
 });
 
 fs.writeFileSync('luaChanges.lua', lualines);
 console.log("luaChanges.lua written");
-//     [2060] = {["edits"] = {{8,20.0}}, ["text"] = "An efficient spell that heals an ally for |cFFFFFF00(+20.0%)|r"},  
