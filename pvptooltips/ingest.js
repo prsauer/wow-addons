@@ -141,7 +141,7 @@ const commonSpellObjects = commonPvpSpells
 commonSpellObjects.forEach(o => {
     
     let nerfEffects = o.inheritedPvpNerfs
-        .map(n => `Affected by ${makeRed(nerfCoeffToString(n[1][0]))} nerf to ${spellObjects[n[0]].info.spellName}'s ${n[1][1]} effect\n`);
+        .filter(n => n[1][0] < 1).map(n => `Affected by ${makeRed(nerfCoeffToString(n[1][0]))} nerf to ${spellObjects[n[0]].info.spellName}'s ${n[1][1]} effect\n`);
     let nerfStrings = [...new Set(nerfEffects)].join('');
     if (o.worstPvPCoefficient && o.worstPvPCoefficient[0] < 1) {
         nerfStrings = `A ${makeRed(nerfCoeffToString(o.worstPvPCoefficient[0]))} nerf to ${o.worstPvPCoefficient[1]} effect\n` + nerfStrings;
