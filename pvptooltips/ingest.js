@@ -1,6 +1,6 @@
 var fs = require('fs');
 const spellObjects = {};
-const FILEPATH = '../../simc/SpellDataDump/allspells_ptr.txt';
+const FILEPATH = '../../simc/SpellDataDump/allspells.txt';
 const data = fs.readFileSync(FILEPATH, 'utf8');
 const commonPvpSpellsFileData = fs.readFileSync('pvpCommonSpells.json', 'utf8');
 const commonPvpSpells = JSON.parse(commonPvpSpellsFileData);
