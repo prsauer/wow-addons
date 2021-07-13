@@ -1,5 +1,5 @@
 WOW_VERSION="90100"
-ADDON_VERSION="2.1.2"
+ADDON_VERSION="2.1.3"
 
 node ingest.js
 rm -rf build
