@@ -121,7 +121,7 @@ for (let i = 0; i < lines.length; i++) {
     const prev = lines[i - 1];
     const effects = prev.slice(19).split("|");
     const simpleName = effects[effects.length - 1].trim().split("(")[0].trim();
-    if (pvpCoeff < 1)
+    if (pvpCoeff <= 0.9999 || pvpCoeff >= 1.001)
       currentSpellInfo.pvpModifiers.push([
         pvpCoeff,
         simpleName,
@@ -256,11 +256,16 @@ fs.writeFileSync("spellDataParsed.json", JSON.stringify(spellData, null, " "));
 
 // Write the tooltip data file
 function nerfCoeffToString(n: number) {
-  return (100.0 * (1 - n)).toFixed(1) + "%";
+  if (n < 1) return (100.0 * (1 - n)).toFixed(1) + "%";
+  return (100.0 * (n - 1)).toFixed(1) + "%";
 }
 
 function makeRed(s: string) {
   return `|cFFFF0000${s}|r`;
+}
+
+function makeYellowish(s: string) {
+  return `|cFFFFFF00${s}|r`;
 }
 
 let lualines = "";
@@ -272,32 +277,28 @@ function isAzeritePower(s: number) {
   return Boolean(getSpellInfo(s).azeritePowerId);
 }
 
+function nerfToString(n: PvPModifier) {
+  if (n[0] < 1) {
+    return `Affected by ${makeRed(nerfCoeffToString(n[0]))} nerf to ${n[3]}'s ${
+      n[1]
+    } effect\n`;
+  }
+  return `Affected by ${makeYellowish(nerfCoeffToString(n[0]))} buff to ${
+    n[3]
+  }'s ${n[1]} effect\n`;
+}
+
 console.log("Parsing triggers and affects");
 commonSpellObjects.forEach((o) => {
   let naturalModifiers = o.pvpModifiers
     .filter((s) => !isAzeritePower(s[2]))
-    .map(
-      (n) =>
-        `Affected by ${makeRed(nerfCoeffToString(n[0]))} nerf to ${n[3]}'s ${
-          n[1]
-        } effect\n`
-    );
+    .map((n) => nerfToString(n));
   let affectedByEffects = o.pvpModifiersFromAffectors
     .filter((s) => !isAzeritePower(s[2]))
-    .map(
-      (n) =>
-        `Affected by ${makeRed(nerfCoeffToString(n[0]))} nerf to ${n[3]}'s ${
-          n[1]
-        } effect\n`
-    );
+    .map((n) => nerfToString(n));
   let triggerEffects = o.pvpModifiersFromTriggers
     .filter((s) => !isAzeritePower(s[2]))
-    .map(
-      (n) =>
-        `Affected by ${makeRed(nerfCoeffToString(n[0]))} nerf to ${n[3]}'s ${
-          n[1]
-        } effect\n`
-    );
+    .map((n) => nerfToString(n));
 
   let nerfStrings = [
     ...Array.from(new Set(naturalModifiers)),
