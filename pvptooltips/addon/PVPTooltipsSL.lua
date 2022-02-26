@@ -1,3 +1,4 @@
+print("PvP tooltips brought to you by wowarenalogs.com!")
 
 local function UpdateTooltip(id)
 	-- If spellId was not passed, search for it
@@ -10,7 +11,6 @@ local function UpdateTooltip(id)
         GameTooltip:AddLine("\r\nIn PvP: ", 1, 0.3, 0.3);
         GameTooltip:AddLine("SpellId: " .. id, 0.62, 0.62, 0.62);
         GameTooltip:AddLine(pvpdiff[id]["text"], 0.90, 0.80, 0.50,  0)
-        GameTooltip:AddLine("PvP tooltips brought to you by wowarenalogs.com", 1, 0.5, 0.0);
     else 
         if id then
             GameTooltip:AddLine("SpellId: " .. id, 0.62, 0.62, 0.62);

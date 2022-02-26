@@ -1,7 +1,7 @@
-WOW_VERSION="90100"
-ADDON_VERSION="2.1.3"
+WOW_VERSION="90200"
+ADDON_VERSION="3.0.1"
 
-node ingest.js
+node --loader ts-node/esm --experimental-specifier-resolution=node ingest.ts
 rm -rf build
 mkdir build
 mkdir build/PVP_Tooltips_Shadowlands
