@@ -1,0 +1,13 @@
+{
+  "name": "pvptooltips",
+  "version": "1",
+  "main": "ingest.ts",
+  "license": "MIT",
+  "dependencies": {
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  },
+  "devDependencies": {
+    "@types/node": "^17.0.21"
+  }
+}
