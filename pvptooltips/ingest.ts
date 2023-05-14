@@ -44,7 +44,7 @@ function parseNameLine(line: string) {
     */
   //// Name             : Rejuvenation (Germination) (id=155777) [Spell Family (7)]
   const findName = new RegExp(
-    /^Name\s*: (?<spellName>[\[\]\.&><_a-zA-Z-+,%/:0-9!" ']*( \(Test\))?( \(Self\) \(Aura Applied\/Removed\))?( \(unused\))?( \(DNT\))?( \(Visual\))?( \(Enveloping Mist\))?( \(Vivify\))?( \(CSA\))?( \(Fel-Touched\))?( \(Traveler's\))?( \(Bulging\))?( \(Holy\))?( \(Guaranteed Loot\))?( \(HARDCODED\))?( \(2H PVP Weapon Budget\))?( \(5\))?( \(Player\))?( \(Purple\)?( \(\)))?( \(Germination\))?( \(Purple\))?( \(DND\))?( \(Lunar\))?( \(Solar\))?( \(Passive\))?) (\(desc=(?<desc>[a-zA-Z 0-9,]*)\) )?(\(id=(?<spellId>[0-9]*)\))? (?<tags>\[.*\])?/
+    /^Name\s*: (?<spellName>[\[\]\.&><_?a-zA-Z-+,%/:0-9!" ']*( \(Test\))?( \(Self\) \(Aura Applied\/Removed\))?( \(unused\))?( \(DNT\))?( \(Visual\))?( \(Enveloping Mist\))?( \(Vivify\))?( \(CSA\))?( \(Fel-Touched\))?( \(Traveler's\))?( \(Bulging\))?( \(Holy\))?( \(Guaranteed Loot\))?( \(HARDCODED\))?( \(2H PVP Weapon Budget\))?( \(5\))?( \(Player\))?( \(Purple\)?( \(\)))?( \(Germination\))?( \(Purple\))?( \(DND\))?( \(Lunar\))?( \(Solar\))?( \(Passive\))?) (\(desc=(?<desc>[a-zA-Z 0-9,]*)\) )?(\(id=(?<spellId>[0-9]*)\))? (?<tags>\[.*\])?/
   );
   const res = findName.exec(line);
   const spellInfo = res?.groups;
